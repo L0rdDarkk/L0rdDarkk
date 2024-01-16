@@ -26,9 +26,6 @@
 [![My GitHub Stats](https://github-readme-stats.vercel.app/api?username=L0rdDarkk&show_icons=true&hide_title=true)](https://github.com/L0rdDarkk)
 
 
-
-## 📌 Pinned Repositories
-
 ## 📌 Pinned Repositories
 
 [![Ads Blocker in Python](https://github-readme-stats.vercel.app/api/pin/?username=L0rdDarkk&repo=Ads_Blocker_py)](https://github.com/L0rdDarkk/Ads_Blocker_py)
