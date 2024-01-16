@@ -1,16 +1,34 @@
-### Hi there 👋
+# 👁‍🗨 [L0rdDarkk] 
 
-<!--
-**L0rdDarkk/L0rdDarkk** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+"Enthusiastic DevOps Beginner | Bridging the Gap Between Development and Operations | Continuous Learner and Tech Explorer"
 
-Here are some ideas to get you started:
+🌱 I’m currently learning and exploring various DevOps tools and practices to streamline œ and operations workflows.
+   Linux Enthusiast 
+   Python Coding
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+📫 How to reach me:
+- [LinkedIn](https://www.linkedin.com/in/juled-mardodaj-54b593144/?originalSubdomain=al)
+- [Email](mailto:jjtech23@yahoo.com)
+
+## 🔧 Technologies & Tools
+
+[![](https://img.shields.io/badge/-Docker-333333?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![](https://img.shields.io/badge/-Python-333333?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![](https://img.shields.io/badge/-Linux-333333?style=flat&logo=linux&logoColor=white)](https://www.linux.org/)
+[![](https://img.shields.io/badge/-VSCode-333333?style=flat&logo=visual-studio-code&logoColor=white)](https://code.visualstudio.com/)
+[![](https://img.shields.io/badge/-HTML-333333?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![](https://img.shields.io/badge/-CSS-333333?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![](https://img.shields.io/badge/-Arch_Linux-333333?style=flat&logo=arch-linux&logoColor=white)](https://archlinux.org/)
+
+
+## 🚀 GitHub Stats
+
+[![My GitHub Stats](https://github-readme-stats.vercel.app/api?username=L0rdDarkk&show_icons=true&hide_title=true)](https://github.com/L0rdDarkk)
+
+
+
+## 📌 Pinned Repositories
+
+[![Arise-Package-Manager](https://github-readme-stats.vercel.app/api/pin/?username=L0rdDark&repo=Arise-Package-Manager)](https://github.com/L0rdDark/Arise-Package-Manager)
+[![Ads_Blocker_py](https://github-readme-stats.vercel.app/api/pin/?username=L0rdDark&repo=Ads_Blocker_py)](https://github.com/L0rdDark/Ads_Blocker_py)
+
