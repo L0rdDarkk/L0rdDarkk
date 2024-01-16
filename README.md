@@ -29,6 +29,9 @@
 ## 📌 Pinned Repositories
 
 [![Ads Blocker in Python](https://github-readme-stats.vercel.app/api/pin/?username=L0rdDarkk&repo=Ads_Blocker_py)](https://github.com/L0rdDarkk/Ads_Blocker_py)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=L0rdDarkk&layout=compact&repo=Ads_Blocker_py)](https://github.com/L0rdDarkk/Ads_Blocker_py)
+
 [![Arise Package Manager](https://github-readme-stats.vercel.app/api/pin/?username=L0rdDarkk&repo=Arise-Package-Manager)](https://github.com/L0rdDarkk/Arise-Package-Manager)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=L0rdDarkk&layout=compact&repo=Arise-Package-Manager)](https://github.com/L0rdDarkk/Arise-Package-Manager)
 
 
