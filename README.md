@@ -1,4 +1,4 @@
-# 👁‍🗨 [L0rdDarkk] 
+# 👁‍🗨L0rdDarkk
 
 "Enthusiastic DevOps Beginner | Bridging the Gap Between Development and Operations | Continuous Learner and Tech Explorer"
 
