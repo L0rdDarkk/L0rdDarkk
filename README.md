@@ -9,6 +9,7 @@
 📫 How to reach me:
 - [LinkedIn](https://www.linkedin.com/in/juled-mardodaj-54b593144/?originalSubdomain=al)
 - [Email](mailto:jjtech23@yahoo.com)
+- [Portofiloi Desktop Mode Only](https://l0rddarkk.github.io/portofolio_web/)
 
 ## 🔧 Technologies & Tools
 
