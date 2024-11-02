@@ -1,6 +1,6 @@
 # 👁‍🗨L0rdDarkk
 
-"Enthusiastic DevOps Beginner | Bridging the Gap Between Development and Operations | Continuous Learner and Tech Explorer"
+"Enthusiastic Cyber Security| Bridging the Gap Between Security and Vulnerabilities | Continuous Learner and Cyber Security Engeneer"
 
 🌱 I’m currently learning and exploring various DevOps tools and practices to streamline œ and operations workflows.
    Linux Enthusiast 
