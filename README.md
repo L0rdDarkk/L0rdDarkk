@@ -2,7 +2,7 @@
 
 "Enthusiastic Cyber Security| Bridging the Gap Between Security and Vulnerabilities | Continuous Learner and Cyber Security Engeneer"
 
-🌱 I’m currently learning and exploring various DevOps tools and practices to streamline œ and operations workflows.
+🌱 I’m currently learning and exploring various Cyber Security tools and practices to streamline œ and operations workflows.
    Linux Enthusiast 
    Python Coding
 
