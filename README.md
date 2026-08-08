@@ -20,16 +20,14 @@
 
 **SIEM & Blue Team**
 
-[![Splunk](https://img.shields.io/badge/-Splunk-333333?style=flat&logo=splunk&logoColor=65A637)](https://www.splunk.com/)
 [![Elastic Stack](https://img.shields.io/badge/-Elastic_Stack_%28ELK%29-333333?style=flat&logo=elasticstack&logoColor=005571)](https://www.elastic.co/elastic-stack)
 [![Kibana](https://img.shields.io/badge/-Kibana-333333?style=flat&logo=kibana&logoColor=E8478B)](https://www.elastic.co/kibana)
-[![Graylog](https://img.shields.io/badge/-Graylog-333333?style=flat&logo=graylog&logoColor=FF3633)](https://graylog.org/)
 [![Grafana](https://img.shields.io/badge/-Grafana-333333?style=flat&logo=grafana&logoColor=F46800)](https://grafana.com/)
 [![Wireshark](https://img.shields.io/badge/-Wireshark-333333?style=flat&logo=wireshark&logoColor=1679A7)](https://www.wireshark.org/)
 
 **Offensive Security**
 
-[![Kali Linux](https://img.shields.io/badge/-Kali_Linux-333333?style=flat&logo=kalilinux&logoColor=557C94)](https://www.kali.org/)
+[![Parrot OS](https://img.shields.io/badge/-Parrot_OS-333333?style=flat&logo=parrotsecurity&logoColor=15E0ED)](https://www.parrotsec.org/)
 [![Burp Suite](https://img.shields.io/badge/-Burp_Suite-333333?style=flat&logo=burpsuite&logoColor=FF6633)](https://portswigger.net/burp)
 [![Metasploit](https://img.shields.io/badge/-Metasploit-333333?style=flat&logo=metasploit&logoColor=2596CD)](https://www.metasploit.com/)
 [![OWASP](https://img.shields.io/badge/-OWASP-333333?style=flat&logo=owasp&logoColor=FFFFFF)](https://owasp.org/)
@@ -40,7 +38,6 @@
 
 [![Claude](https://img.shields.io/badge/-Claude_%28Anthropic%29-333333?style=flat&logo=anthropic&logoColor=D97757)](https://www.anthropic.com/)
 [![Ollama](https://img.shields.io/badge/-Ollama-333333?style=flat&logo=ollama&logoColor=FFFFFF)](https://ollama.com/)
-[![Hugging Face](https://img.shields.io/badge/-Hugging_Face-333333?style=flat&logo=huggingface&logoColor=FFD21E)](https://huggingface.co/)
 [![LangChain](https://img.shields.io/badge/-LangChain-333333?style=flat&logo=langchain&logoColor=FFFFFF)](https://www.langchain.com/)
 [![PyTorch](https://img.shields.io/badge/-PyTorch-333333?style=flat&logo=pytorch&logoColor=EE4C2C)](https://pytorch.org/)
 [![Jupyter](https://img.shields.io/badge/-Jupyter-333333?style=flat&logo=jupyter&logoColor=F37626)](https://jupyter.org/)
