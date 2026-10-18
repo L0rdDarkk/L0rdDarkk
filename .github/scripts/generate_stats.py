@@ -13,7 +13,7 @@ import json
 import os
 import sys
 import urllib.request
-from datetime import datetime
+from datetime import datetime, timezone
 
 USER = os.environ.get("GH_USER", "L0rdDarkk")
 TOKEN = os.environ.get("GH_TOKEN", "")
@@ -22,9 +22,11 @@ OUT = os.path.join("assets", "telemetry.svg")
 # console theme — language segments/legend reuse these so the panel stays on-brand
 PALETTE = ["#00f7a5", "#4fe3ff", "#ffb000", "#ff4d5e", "#8a63d2", "#6b7f90"]
 
-GRAPHQL = """
+# --- base query: identity, repos, languages (all-time totals) ---
+Q_BASE = """
 query($login: String!) {
   user(login: $login) {
+    createdAt
     followers { totalCount }
     repositories(ownerAffiliations: OWNER, isFork: false, first: 100) {
       totalCount
@@ -33,15 +35,6 @@ query($login: String!) {
         languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name color } }
         }
-      }
-    }
-    contributionsCollection {
-      totalCommitContributions
-      totalPullRequestContributions
-      restrictedContributionsCount
-      contributionCalendar {
-        totalContributions
-        weeks { contributionDays { date contributionCount } }
       }
     }
   }
@@ -68,14 +61,10 @@ def gql(query, variables):
 
 
 def collect():
-    data = gql(GRAPHQL, {"login": USER})["user"]
-    cc = data["contributionsCollection"]
-    cal = cc["contributionCalendar"]
-
-    repos = data["repositories"]["nodes"]
+    base = gql(Q_BASE, {"login": USER})["user"]
+    repos = base["repositories"]["nodes"]
     stars = sum(r["stargazerCount"] for r in repos)
 
-    # aggregate language sizes + remember each language's GitHub color
     sizes, colors = {}, {}
     for r in repos:
         for e in r["languages"]["edges"]:
@@ -83,36 +72,69 @@ def collect():
             sizes[name] = sizes.get(name, 0) + e["size"]
             colors.setdefault(name, e["node"]["color"] or "#6b7f90")
 
-    # flatten the calendar to an ordered list of daily counts
-    days = []
-    for wk in cal["weeks"]:
-        for d in wk["contributionDays"]:
-            days.append((d["date"], d["contributionCount"]))
-    days.sort()
-    counts = [c for _, c in days]
+    # --- sum contributions across every year since the account was created ---
+    now = datetime.now(timezone.utc)
+    now_iso = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    start_year = int(base["createdAt"][:4])
+    years = list(range(start_year, now.year + 1))
 
-    # current streak = trailing run of non-zero days; longest = max run in window
+    blocks = []
+    for y in years:
+        frm = f"{y}-01-01T00:00:00Z"
+        to = now_iso if y == now.year else f"{y}-12-31T23:59:59Z"
+        cal = ("contributionCalendar { totalContributions weeks { contributionDays { date contributionCount } } }"
+               if y == now.year else "contributionCalendar { totalContributions }")
+        blocks.append(
+            f'y{y}: contributionsCollection(from: "{frm}", to: "{to}") '
+            f'{{ totalCommitContributions totalPullRequestContributions restrictedContributionsCount {cal} }}'
+        )
+    q_years = "query($login: String!) { user(login: $login) { " + " ".join(blocks) + " } }"
+    yr = gql(q_years, {"login": USER})["user"]
+
+    commits = contrib = prs = 0
+    this_year_days = []
+    for y in years:
+        cc = yr[f"y{y}"]
+        commits += cc["totalCommitContributions"]
+        prs += cc["totalPullRequestContributions"]
+        cal = cc["contributionCalendar"]
+        contrib += cal["totalContributions"] + cc.get("restrictedContributionsCount", 0)
+        if y == now.year:
+            for wk in cal["weeks"]:
+                for d in wk["contributionDays"]:
+                    this_year_days.append((d["date"], d["contributionCount"]))
+
+    this_year_days.sort()
+    daily = [c for _, c in this_year_days]
+
+    # current streak = trailing run of active days; longest = max active run this year
     cur = 0
-    for c in reversed(counts):
+    for c in reversed(daily):
         if c > 0:
             cur += 1
         else:
             break
     longest = run = 0
-    for c in counts:
+    for c in daily:
         run = run + 1 if c > 0 else 0
         longest = max(longest, run)
 
+    # equalizer: weekly contribution totals (last 28 weeks) so the pulse varies
+    weekly = []
+    for i in range(0, len(daily), 7):
+        weekly.append(sum(daily[i:i + 7]))
+    recent = weekly[-28:] if weekly else [0]
+
     return {
-        "commits": cc["totalCommitContributions"] + cc.get("restrictedContributionsCount", 0),
-        "contrib": cal["totalContributions"],
-        "repos": data["repositories"]["totalCount"],
-        "followers": data["followers"]["totalCount"],
+        "commits": commits,
+        "contrib": contrib,
+        "repos": base["repositories"]["totalCount"],
+        "followers": base["followers"]["totalCount"],
         "stars": stars,
-        "prs": cc["totalPullRequestContributions"],
+        "prs": prs,
         "sizes": sizes,
         "colors": colors,
-        "recent": counts[-28:],
+        "recent": recent,
         "cur_streak": cur,
         "longest_streak": longest,
     }
