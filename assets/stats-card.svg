@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 485 410" width="485" height="410" font-family="'JetBrains Mono','Fira Code',ui-monospace,Consolas,monospace" role="img" aria-label="GitHub stats">
+  <rect x="1" y="1" width="483" height="408" rx="12" fill="#0b1017" stroke="#1b2a1f" stroke-width="1.5"/>
+  <circle cx="26" cy="24" r="5.5" fill="#ff5f57"/><circle cx="46" cy="24" r="5.5" fill="#febc2e"/><circle cx="66" cy="24" r="5.5" fill="#28c840"/>
+  <text x="88" y="29" fill="#4a5a6a" font-size="13">l0rddarkk@darknet: ~ $ git stats</text>
+  <line x1="0" y1="42" x2="485" y2="42" stroke="#161f29"/>
+  <text x="242" y="108" font-size="64" font-weight="700" fill="#00f7a5" text-anchor="middle">105</text>
+  <text x="242" y="132" font-size="12" fill="#6b7f90" text-anchor="middle" letter-spacing="3">CONTRIBUTIONS · LAST YEAR</text>
+  <line x1="26" y1="158" x2="459" y2="158" stroke="#161f29"/>
+  <text x="26" y="196" font-size="13.5" fill="#6b7f90">commits</text><text x="459" y="196" font-size="14" font-weight="700" fill="#c9d6e3" text-anchor="end">84</text><text x="26" y="226" font-size="13.5" fill="#6b7f90">repositories</text><text x="459" y="226" font-size="14" font-weight="700" fill="#c9d6e3" text-anchor="end">14</text><text x="26" y="256" font-size="13.5" fill="#6b7f90">stars earned</text><text x="459" y="256" font-size="14" font-weight="700" fill="#c9d6e3" text-anchor="end">1</text><text x="26" y="286" font-size="13.5" fill="#6b7f90">followers</text><text x="459" y="286" font-size="14" font-weight="700" fill="#c9d6e3" text-anchor="end">9</text><text x="26" y="316" font-size="13.5" fill="#6b7f90">pull requests</text><text x="459" y="316" font-size="14" font-weight="700" fill="#c9d6e3" text-anchor="end">1</text>
+  <line x1="26" y1="348" x2="459" y2="348" stroke="#161f29"/>
+  <text x="26" y="376" font-size="12" fill="#2f6b4f">🔥 streak 0d · longest 1d</text>
+  <text x="459" y="376" font-size="12" fill="#2f4150" text-anchor="end">since 2022</text>
+</svg>

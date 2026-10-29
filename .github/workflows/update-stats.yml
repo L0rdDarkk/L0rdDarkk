@@ -40,10 +40,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- assets/telemetry.svg; then
-            echo "No changes to telemetry.svg"
+          if git diff --quiet -- assets/stats-card.svg assets/contrib-heatmap.svg; then
+            echo "No changes to stats-card.svg / contrib-heatmap.svg"
           else
-            git add assets/telemetry.svg
-            git commit -m "chore: refresh telemetry stats [skip ci]"
+            git add assets/stats-card.svg assets/contrib-heatmap.svg
+            git commit -m "chore: refresh stats + contribution heatmap [skip ci]"
             git push
           fi

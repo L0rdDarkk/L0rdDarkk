@@ -270,16 +270,149 @@ SVG_TEMPLATE = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 352" 
 """
 
 
+# ---------------------------------------------------------------------------
+# contribution heatmap (GitHub-style grid, cells reveal one by one)
+# ---------------------------------------------------------------------------
+HEATMAP_OUT = os.path.join("assets", "contrib-heatmap.svg")
+
+Q_HEATMAP = """
+query($login: String!) {
+  user(login: $login) {
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks { contributionDays { date weekday contributionLevel } }
+      }
+    }
+  }
+}
+"""
+
+LEVEL_COLOR = {
+    "NONE": "#10181f",
+    "FIRST_QUARTILE": "#0e4d38",
+    "SECOND_QUARTILE": "#11795a",
+    "THIRD_QUARTILE": "#15b588",
+    "FOURTH_QUARTILE": "#00f7a5",
+}
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+def collect_heatmap():
+    cal = gql(Q_HEATMAP, {"login": USER})["user"]["contributionsCollection"]["contributionCalendar"]
+    return cal["weeks"], cal["totalContributions"]
+
+
+def build_heatmap(weeks, total):
+    CELL, PITCH = 11, 14
+    GX, GY = 52, 54
+    cells, months, last_m = [], [], None
+    for w, week in enumerate(weeks):
+        days = week["contributionDays"]
+        if days:
+            m = int(days[0]["date"][5:7])
+            if m != last_m:
+                months.append(f'<text x="{GX + w*PITCH}" y="{GY-8}" font-size="10" fill="#6b7f90">{MONTHS[m-1]}</text>')
+                last_m = m
+        for d in days:
+            wd = d["weekday"]
+            color = LEVEL_COLOR.get(d["contributionLevel"], "#10181f")
+            x, y = GX + w * PITCH, GY + wd * PITCH
+            delay = w * 0.02 + wd * 0.008
+            cells.append(
+                f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" fill="{color}" opacity="0">'
+                f'<animate attributeName="opacity" from="0" to="1" begin="{delay:.2f}s" dur="0.3s" fill="freeze"/></rect>'
+            )
+    daylabels = "".join(
+        f'<text x="{GX-10}" y="{GY + wd*PITCH + 9}" font-size="9" fill="#4a5a6a" text-anchor="end">{lbl}</text>'
+        for wd, lbl in [(1, "Mon"), (3, "Wed"), (5, "Fri")]
+    )
+    legend = []
+    lx0 = 720
+    for i, key in enumerate(["NONE", "FIRST_QUARTILE", "SECOND_QUARTILE", "THIRD_QUARTILE", "FOURTH_QUARTILE"]):
+        legend.append(f'<rect x="{lx0 + i*14}" y="167" width="11" height="11" rx="2" fill="{LEVEL_COLOR[key]}"/>')
+    legend_svg = (
+        f'<text x="{lx0-6}" y="176" font-size="10" fill="#4a5a6a" text-anchor="end">Less</text>'
+        + "".join(legend)
+        + f'<text x="{lx0 + 5*14 + 2}" y="176" font-size="10" fill="#4a5a6a">More</text>'
+    )
+    W, H = 860, 196
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
+        f'font-family="\'JetBrains Mono\',\'Fira Code\',ui-monospace,Consolas,monospace" role="img" '
+        f'aria-label="L0rdDarkk contribution heatmap">\n'
+        f'  <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="14" fill="#0b1017" stroke="#1b2a1f" stroke-width="1.5"/>\n'
+        f'  <circle cx="28" cy="24" r="5.5" fill="#ff5f57"/><circle cx="48" cy="24" r="5.5" fill="#febc2e"/>'
+        f'<circle cx="68" cy="24" r="5.5" fill="#28c840"/>\n'
+        f'  <text x="92" y="29" fill="#4a5a6a" font-size="13">l0rddarkk@darknet: ~/contributions — last 12 months</text>\n'
+        f'  <text x="{W-24}" y="29" fill="#2f6b4f" font-size="12" text-anchor="end">{total} total</text>\n'
+        f'  <line x1="0" y1="42" x2="{W}" y2="42" stroke="#161f29"/>\n'
+        f'  <g>{"".join(months)}</g>\n'
+        f'  <g>{daylabels}</g>\n'
+        f'  <g>{"".join(cells)}</g>\n'
+        f'  <text x="24" y="176" font-size="11" fill="#2f6b4f">{total} contributions in the last year</text>\n'
+        f'  <g>{legend_svg}</g>\n'
+        f'</svg>\n'
+    )
+
+
+# ---------------------------------------------------------------------------
+# compact stats card — sits beside the ASCII portrait (same canvas size)
+# ---------------------------------------------------------------------------
+CARD_OUT = os.path.join("assets", "stats-card.svg")
+CARD_W, CARD_H = 485, 410
+
+
+def build_card(s):
+    rows = [
+        ("commits", s["commits"]),
+        ("repositories", s["repos"]),
+        ("stars earned", s["stars"]),
+        ("followers", s["followers"]),
+        ("pull requests", s["prs"]),
+    ]
+    y = 196
+    row_svg = []
+    for label, val in rows:
+        row_svg.append(
+            f'<text x="26" y="{y}" font-size="13.5" fill="#6b7f90">{label}</text>'
+            f'<text x="{CARD_W-26}" y="{y}" font-size="14" font-weight="700" fill="#c9d6e3" text-anchor="end">{val}</text>'
+        )
+        y += 30
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {CARD_W} {CARD_H}" width="{CARD_W}" height="{CARD_H}" '
+        f'font-family="\'JetBrains Mono\',\'Fira Code\',ui-monospace,Consolas,monospace" role="img" aria-label="GitHub stats">\n'
+        f'  <rect x="1" y="1" width="{CARD_W-2}" height="{CARD_H-2}" rx="12" fill="#0b1017" stroke="#1b2a1f" stroke-width="1.5"/>\n'
+        f'  <circle cx="26" cy="24" r="5.5" fill="#ff5f57"/><circle cx="46" cy="24" r="5.5" fill="#febc2e"/>'
+        f'<circle cx="66" cy="24" r="5.5" fill="#28c840"/>\n'
+        f'  <text x="88" y="29" fill="#4a5a6a" font-size="13">l0rddarkk@darknet: ~ $ git stats</text>\n'
+        f'  <line x1="0" y1="42" x2="{CARD_W}" y2="42" stroke="#161f29"/>\n'
+        f'  <text x="{CARD_W//2}" y="108" font-size="64" font-weight="700" fill="#00f7a5" text-anchor="middle">{s["contrib"]}</text>\n'
+        f'  <text x="{CARD_W//2}" y="132" font-size="12" fill="#6b7f90" text-anchor="middle" letter-spacing="3">CONTRIBUTIONS · LAST YEAR</text>\n'
+        f'  <line x1="26" y1="158" x2="{CARD_W-26}" y2="158" stroke="#161f29"/>\n'
+        f'  {"".join(row_svg)}\n'
+        f'  <line x1="26" y1="348" x2="{CARD_W-26}" y2="348" stroke="#161f29"/>\n'
+        f'  <text x="26" y="376" font-size="12" fill="#2f6b4f">\U0001f525 streak {s["cur_streak"]}d · longest {s["longest_streak"]}d</text>\n'
+        f'  <text x="{CARD_W-26}" y="376" font-size="12" fill="#2f4150" text-anchor="end">since 2022</text>\n'
+        f'</svg>\n'
+    )
+
+
 def main():
     if not TOKEN:
         sys.exit("GH_TOKEN not set — add a repo secret and pass it to the workflow.")
-    stats = collect()
-    svg = build_svg(stats)
     os.makedirs("assets", exist_ok=True)
-    with open(OUT, "w", encoding="utf-8") as f:
-        f.write(svg)
-    print(f"wrote {OUT}: {stats['commits']} commits, {stats['contrib']} contrib, "
+
+    stats = collect()
+    with open(CARD_OUT, "w", encoding="utf-8") as f:
+        f.write(build_card(stats))
+    print(f"wrote {CARD_OUT}: {stats['commits']} commits, {stats['contrib']} contrib, "
           f"{stats['repos']} repos, {stats['stars']} stars, streak {stats['cur_streak']}/{stats['longest_streak']}")
+
+    weeks, total = collect_heatmap()
+    with open(HEATMAP_OUT, "w", encoding="utf-8") as f:
+        f.write(build_heatmap(weeks, total))
+    print(f"wrote {HEATMAP_OUT}: {len(weeks)} weeks, {total} contributions")
 
 
 if __name__ == "__main__":
