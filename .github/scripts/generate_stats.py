@@ -388,7 +388,7 @@ def build_card(s):
         f'  <text x="88" y="29" fill="#4a5a6a" font-size="13">l0rddarkk@darknet: ~ $ git stats</text>\n'
         f'  <line x1="0" y1="42" x2="{CARD_W}" y2="42" stroke="#161f29"/>\n'
         f'  <text x="{CARD_W//2}" y="108" font-size="64" font-weight="700" fill="#00f7a5" text-anchor="middle">{s["contrib"]}</text>\n'
-        f'  <text x="{CARD_W//2}" y="132" font-size="12" fill="#6b7f90" text-anchor="middle" letter-spacing="3">CONTRIBUTIONS · LAST YEAR</text>\n'
+        f'  <text x="{CARD_W//2}" y="132" font-size="12" fill="#6b7f90" text-anchor="middle" letter-spacing="3">TOTAL CONTRIBUTIONS</text>\n'
         f'  <line x1="26" y1="158" x2="{CARD_W-26}" y2="158" stroke="#161f29"/>\n'
         f'  {"".join(row_svg)}\n'
         f'  <line x1="26" y1="348" x2="{CARD_W-26}" y2="348" stroke="#161f29"/>\n'
