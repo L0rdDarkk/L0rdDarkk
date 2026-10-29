@@ -18,6 +18,7 @@ from datetime import datetime, timezone
 USER = os.environ.get("GH_USER", "L0rdDarkk")
 TOKEN = os.environ.get("GH_TOKEN", "")
 OUT = os.path.join("assets", "telemetry.svg")
+# prefers GH_STATS_TOKEN (PAT) over the built-in token so private contributions count
 
 # console theme — language segments/legend reuse these so the panel stays on-brand
 PALETTE = ["#00f7a5", "#4fe3ff", "#ffb000", "#ff4d5e", "#8a63d2", "#6b7f90"]
